@@ -1,2 +1,2 @@
-kubeadm join 192.168.33.41:6443 --token gncgix.urhdxfvxlf1tcj7o \
-    --discovery-token-ca-cert-hash sha256:206b97267d11e669d6ee70f5ff7096c209115b2ce687f4838ae2dc0c1a703f78
+kubeadm join 192.168.33.41:6443 --token cf48wx.d9tz2pcmqy7dm4vt \
+    --discovery-token-ca-cert-hash sha256:b8e47ecfc30bb3bb1dd94e75812552ba289153639944860080f218fafc070dde

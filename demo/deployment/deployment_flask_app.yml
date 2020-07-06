@@ -15,24 +15,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-deployment
-  labels:
-    app: myapp
-    type: front-end
+  name: hello-python
 spec:
-  replicas: 4
   selector:
     matchLabels:
-      app: myapp
+      app: hello-python
+  replicas: 4
   template:
     metadata:
-      name: myapp-pod
       labels:
-        app: myapp
+        app: hello-python
     spec:
       containers:
-        - name: flask-app-container
-          image: hamamatcha/flask_app
+        - name: hello-python
+          image: hamamatcha/flask_app:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 5000

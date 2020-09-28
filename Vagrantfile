@@ -13,15 +13,32 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/bionic64"
-  # config.vm.network "forwarded_port", guest: 3306, host:22 , protocol: "tcp"
+  config.disksize.size = "20GB"
   config.vm.provider "virtualbox" do |vb|
-    # äÑÇËìñÇƒÇÈÉÅÉÇÉäÅ[(MB)
-    vb.memory = 8192 
-    # CPUÇÃêî
+    vb.memory = 8192
     vb.cpus = 4
-    # I/O APICÇÃóLå¯âª
-    # vb.customize ["modifyvm", :id, "--ioapic", "on"]
   end
+
+  config.vm.define "master" do |atomic|
+    atomic.vm.hostname="master.atomichost"
+    atomic.vm.network "private_network", ip: "192.168.33.41"
+  end
+
+  config.vm.define "node01" do |atomic|
+    atomic.vm.hostname="node01.atomichost"
+    atomic.vm.network "private_network", ip: "192.168.33.42"
+  end
+
+  config.vm.define "node02" do |atomic|
+    atomic.vm.hostname="node02.atomichost"
+    atomic.vm.network "private_network", ip: "192.168.33.43"
+  end
+
+  config.vm.provision :shell, path: "./deployments/vm/docker-install.sh"
+  config.vm.provision :shell, path: "./deployments/vm/permission.sh"
+  config.vm.provision :shell, path: "./deployments/vm/kubeadm_install.sh"
+  # config.vm.provision :shell, path: "./deployments/vm/golang-install.sh"
+end
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -72,7 +89,4 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision :shell, path: "./deployments/vm/docker-install.sh"
-  config.vm.provision :shell, path: "./deployments/vm/permission.sh"
-  # config.vm.provision :shell, path: "./deployments/vm/golang-install.sh"
-end
+
